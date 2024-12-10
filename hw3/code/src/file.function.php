@@ -27,6 +27,15 @@ function addFunction(array $config) : string {
 
     $name = readline("Введите имя: ");
     $date = readline("Введите дату рождения в формате ДД-ММ-ГГГГ: ");
+
+    if (!validateDate($date)) {
+        return handleError("Неверный формат даты.");
+    }
+
+    if (strlen($name) === 0 || strlen($name) > 30)  {
+        return handleError("Имя должно состоять миннимум из 1 символа, и не должно превышать 30 символов.");
+    }
+
     $data = $name . ", " . $date . "\r\n";
 
     $fileHandler = fopen($address, 'a');
@@ -38,7 +47,7 @@ function addFunction(array $config) : string {
         return handleError("Произошла ошибка записи. Данные не сохранены");
     }
 
-    fclose($fileHandler);
+    //fclose($fileHandler);
 }
 
 // function clearFunction(string $address) : string {
