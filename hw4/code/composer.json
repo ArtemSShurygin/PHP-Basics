@@ -1,0 +1,17 @@
+{
+    "name": "php_hw/hw4",
+    "description": "ДЗ 4",
+    "type": "project",
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "files": [
+            "src/AbstractBook.php",
+            "src/Book.php",
+            "src/Bookcase.php",
+            "src/Room.php",
+            "src/Ebook.php"
+        ]
+    }
+}
