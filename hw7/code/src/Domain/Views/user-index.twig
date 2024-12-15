@@ -3,7 +3,8 @@
 
     <ul id="navigation">
         {% for user in users %}
-            <li>{{ user.getUserName() }} {{ user.getUserLastName() }}. День рождения: {{ user.getUserBirthday() | date('d.m.Y') }}. <a href="/user/edit/?user_id={{user.userId}}">Изменить</a>  /  <a href="/user/delete/?user_id={{user.userId}}">Удалить</a></li>
+            <li>{{ user.userName }} {{ user.userLastName }}. День рождения: {{ user.userBirthday | date('d.m.Y') }}. <a href="/user/update/?user_id={{user.userId}}">Изменить</a>  /
+            <a href="/user/delete/?user_id={{user.userId}}">Удалить</a></li>
         {% endfor %}
     </ul>
     <a href="/user/edit">Добавить</a>

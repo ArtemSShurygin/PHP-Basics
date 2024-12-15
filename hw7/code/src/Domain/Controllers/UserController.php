@@ -13,6 +13,8 @@ class UserController extends AbstractController
         'actionHash' => ['admin', 'some'],
         'actionSave' => ['admin'],
         'actionEdit'=> ['admin'],
+        'actionUpdateUser'=> ['admin'],
+        'actionUpdate'=> ['admin'],
         'actionDelete'=> ['admin'],
         'actionIndex' => ['user'],
         'actionAuth' => ['user'],
@@ -45,6 +47,28 @@ class UserController extends AbstractController
         }
     }
 
+
+    public function actionEdit(): string {
+        $render = new Render();
+
+
+        $action = '/user/save';
+        if(isset($_GET['user_id'])){
+            $userId = $_GET['user_id'];
+            $action = '/user/update';
+            $userData = User::getUserDataByID($userId);
+
+        }
+        
+        return $render->renderPageWithForm(
+                'user-form.twig', 
+                [
+                    'title' => 'Форма создания пользователя',
+                    'user_data'=> $userData ?? [],
+                    'action' => $action
+                ]);
+    }
+
     public function actionSave(): string
     {
         if (User::validateRequestData()) {
@@ -66,19 +90,37 @@ class UserController extends AbstractController
         }
     }
 
-    public function actionUpdate(): string
+
+    // public function actionUpdateUser(): string
+    // {
+    //     $render = new Render();
+
+    //     $userId = $_GET['user_id'];
+    //     $userData = User::getUserDataByID($userId);
+
+    //     return $render->renderPageWithForm(
+    //         'user-form-update.twig',
+    //         [
+    //             'title' => 'Форма создания пользователя',
+    //             'user_data'=> $userData,
+    //             'user_id'=> $userId
+    //         ]
+    //     );
+    // }
+
+        public function actionUpdate(): string
     {
-        if (User::exists($_GET['id'])) {
+        if (User::exists($_POST['user_id'])) {
             $user = new User();
-            $user->setUserId($_GET['id']);
+            $user->setUserId($_POST['user_id']);
 
             $arrayData = [];
 
-            if (isset($_GET['name']))
-                $arrayData['user_name'] = $_GET['name'];
+            if (isset($_POST['name']))
+                $arrayData['user_name'] = $_POST['name'];
 
-            if (isset($_GET['lastname'])) {
-                $arrayData['user_lastname'] = $_GET['lastname'];
+            if (isset($_POST['lastname'])) {
+                $arrayData['user_lastname'] = $_POST['lastname'];
             }
 
             $user->updateUser($arrayData,  $user->getUserId());
@@ -96,10 +138,40 @@ class UserController extends AbstractController
         );
     }
 
+    // public function actionUpdate(): string
+    // {
+    //     if (User::exists($_GET['user_id'])) {
+    //         $user = new User();
+    //         $user->setUserId($_GET['user_id']);
+
+    //         $arrayData = [];
+
+    //         if (isset($_GET['name']))
+    //             $arrayData['user_name'] = $_GET['name'];
+
+    //         if (isset($_GET['lastname'])) {
+    //             $arrayData['user_lastname'] = $_GET['lastname'];
+    //         }
+
+    //         $user->updateUser($arrayData,  $user->getUserId());
+    //     } else {
+    //         throw new \Exception("Пользователь не существует");
+    //     }
+
+    //     $render = new Render();
+    //     return $render->renderPage(
+    //         'user-created.twig',
+    //         [
+    //             'title' => 'Пользователь обновлен',
+    //             'message' => "Обновлен пользователь " . $user->getUserId()
+    //         ]
+    //     );
+    // }
+
     public function actionDelete(): string
     {
-        if (User::exists($_GET['id'])) {
-            User::deleteFromStorage($_GET['id']);
+        if (User::exists($_GET['user_id'])) {
+            User::deleteFromStorage($_GET['user_id']);
 
             $render = new Render();
 
@@ -110,18 +182,6 @@ class UserController extends AbstractController
         } else {
             throw new \Exception("Пользователь не существует");
         }
-    }
-
-    public function actionEdit(): string
-    {
-        $render = new Render();
-
-        return $render->renderPageWithForm(
-            'user-form-edit.twig',
-            [
-                'title' => 'Форма создания пользователя'
-            ]
-        );
     }
 
     public function actionAuth(): string

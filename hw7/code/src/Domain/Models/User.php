@@ -11,15 +11,17 @@ class User
     private ?string $userName;
     private ?string $userLastName;
     private ?int $userBirthday;
+    private ?string $login;
 
     //private static string $storageAddress = '/storage/birthdays.txt';
 
-    public function __construct(string $name = null, string $lastName = null, int $birthday = null, int $id_user = null)
+    public function __construct(int $idUser = null, string $name = null, string $lastName = null, int $birthday = null, string $login = null)
     {
+        $this->idUser = $idUser;
         $this->userName = $name;
         $this->userLastName = $lastName;
         $this->userBirthday = $birthday;
-        $this->idUser = $id_user;
+        $this->login = $login;
     }
 
     public function setUserId(int $id_user): void
@@ -62,6 +64,13 @@ class User
         $this->userBirthday = strtotime($birthdayString);
     }
 
+    public static function getUserDataByID(int $userID): array {
+        $userSql = "SELECT * FROM users WHERE id_user = :id";
+        $handler = Application::$storage->get()->prepare($userSql);
+        $handler->execute(['id' => $userID]);
+        return $handler->fetch();
+    }
+
     public static function getAllUsersFromStorage(): array
     {
         $sql = "SELECT * FROM users";
@@ -73,7 +82,7 @@ class User
         $users = [];
 
         foreach ($result as $item) {
-            $user = new User($item['user_name'], $item['user_lastname'], $item['user_birthday_timestamp']);
+            $user = new User($item['id_user'], $item['user_name'], $item['user_lastname'], $item['user_birthday_timestamp'],$item['login']);
             $users[] = $user;
         }
 
@@ -152,6 +161,7 @@ class User
 
     public function updateUser(array $userDataArray, int $id_user): void
     {
+        var_dump($userDataArray );
         $sql = "UPDATE users SET ";
 
         $counter = 0;
@@ -164,7 +174,6 @@ class User
 
             $counter++;
         }
-
         $sql .= " WHERE id_user = $id_user";
         $handler = Application::$storage->get()->prepare($sql);
         $handler->execute($userDataArray);
@@ -177,4 +186,5 @@ class User
         $handler = Application::$storage->get()->prepare($sql);
         $handler->execute(['id_user' => $user_id]);
     }
+
 }
