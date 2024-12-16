@@ -64,7 +64,8 @@ class User
         $this->userBirthday = strtotime($birthdayString);
     }
 
-    public static function getUserDataByID(int $userID): array {
+    public static function getUserDataByID(int $userID): array
+    {
         $userSql = "SELECT * FROM users WHERE id_user = :id";
         $handler = Application::$storage->get()->prepare($userSql);
         $handler->execute(['id' => $userID]);
@@ -82,7 +83,7 @@ class User
         $users = [];
 
         foreach ($result as $item) {
-            $user = new User($item['id_user'], $item['user_name'], $item['user_lastname'], $item['user_birthday_timestamp'],$item['login']);
+            $user = new User($item['id_user'], $item['user_name'], $item['user_lastname'], $item['user_birthday_timestamp'], $item['login']);
             $users[] = $user;
         }
 
@@ -161,7 +162,7 @@ class User
 
     public function updateUser(array $userDataArray, int $id_user): void
     {
-        var_dump($userDataArray );
+        //var_dump($userDataArray );
         $sql = "UPDATE users SET ";
 
         $counter = 0;
@@ -187,4 +188,12 @@ class User
         $handler->execute(['id_user' => $user_id]);
     }
 
+    public static function findUserRoles($id_user)
+    {
+        $rolesSql = "SELECT * FROM user_roles WHERE id_user = :id";
+
+        $handler = Application::$storage->get()->prepare($rolesSql);
+        $handler->execute(['id' => $_SESSION['id_user']]);
+        return  $handler->fetchAll();
+    }
 }

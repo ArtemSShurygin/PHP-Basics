@@ -10,16 +10,18 @@ use Geekbrains\Application1\Domain\Models\User;
 class UserController extends AbstractController
 {
     protected array $actionsPermissions = [
-        'actionHash' => ['admin', 'some'],
+        'actionHash' => ['admin', 'user'],
         'actionSave' => ['admin'],
-        'actionEdit'=> ['admin'],
-        'actionUpdateUser'=> ['admin'],
-        'actionUpdate'=> ['admin'],
-        'actionDelete'=> ['admin'],
+        'actionEdit' => ['admin'],
+        'actionUpdateUser' => ['admin'],
+        'actionUpdate' => ['admin'],
+        'actionDelete' => ['admin'],
+        'actionUpdateform' => ['admin'],
+
         'actionIndex' => ['user'],
         'actionAuth' => ['user'],
         'actionLogin' => ['user'],
-        'actionLogout' => ['user']
+        'actionLogout' => ['user'],
     ];
 
     public function actionIndex()
@@ -47,26 +49,35 @@ class UserController extends AbstractController
         }
     }
 
-
-    public function actionEdit(): string {
+    public function actionEdit(): string
+    {
         $render = new Render();
 
-
-        $action = '/user/save';
-        if(isset($_GET['user_id'])){
-            $userId = $_GET['user_id'];
-            $action = '/user/update';
-            $userData = User::getUserDataByID($userId);
-
-        }
-        
         return $render->renderPageWithForm(
-                'user-form.twig', 
-                [
-                    'title' => 'Форма создания пользователя',
-                    'user_data'=> $userData ?? [],
-                    'action' => $action
-                ]);
+            'user-form-edit.twig',
+            [
+                'title' => 'Форма создания пользователя'
+            ]
+        );
+    }
+
+    public function actionUpdateform(): string
+    {
+        $render = new Render();
+        $userData = [];
+        $userData['userId'] = $_GET['user_id'];
+        $userData['userName'] = $_GET['user_name'];
+        $userData['userLastName'] = $_GET['user_last_name'];
+        $userData['userBirthday'] = $_GET['user_birthday'];
+        //var_dump($userData);
+
+        return $render->renderPageWithForm(
+            'user-form-update.twig',
+            [
+                'title' => 'Форма изменения пользователя',
+                'userData' => $userData
+            ]
+        );
     }
 
     public function actionSave(): string
@@ -90,25 +101,7 @@ class UserController extends AbstractController
         }
     }
 
-
-    // public function actionUpdateUser(): string
-    // {
-    //     $render = new Render();
-
-    //     $userId = $_GET['user_id'];
-    //     $userData = User::getUserDataByID($userId);
-
-    //     return $render->renderPageWithForm(
-    //         'user-form-update.twig',
-    //         [
-    //             'title' => 'Форма создания пользователя',
-    //             'user_data'=> $userData,
-    //             'user_id'=> $userId
-    //         ]
-    //     );
-    // }
-
-        public function actionUpdate(): string
+    public function actionUpdate(): string
     {
         if (User::exists($_POST['user_id'])) {
             $user = new User();
@@ -121,6 +114,11 @@ class UserController extends AbstractController
 
             if (isset($_POST['lastname'])) {
                 $arrayData['user_lastname'] = $_POST['lastname'];
+            }
+
+            if (isset($_POST['birthday'])) {
+                //$arrayData['user_birthday_timestamp'] = $_POST['birthday'];
+                $arrayData['user_birthday_timestamp'] = strtotime($_POST['birthday']);
             }
 
             $user->updateUser($arrayData,  $user->getUserId());
@@ -137,36 +135,6 @@ class UserController extends AbstractController
             ]
         );
     }
-
-    // public function actionUpdate(): string
-    // {
-    //     if (User::exists($_GET['user_id'])) {
-    //         $user = new User();
-    //         $user->setUserId($_GET['user_id']);
-
-    //         $arrayData = [];
-
-    //         if (isset($_GET['name']))
-    //             $arrayData['user_name'] = $_GET['name'];
-
-    //         if (isset($_GET['lastname'])) {
-    //             $arrayData['user_lastname'] = $_GET['lastname'];
-    //         }
-
-    //         $user->updateUser($arrayData,  $user->getUserId());
-    //     } else {
-    //         throw new \Exception("Пользователь не существует");
-    //     }
-
-    //     $render = new Render();
-    //     return $render->renderPage(
-    //         'user-created.twig',
-    //         [
-    //             'title' => 'Пользователь обновлен',
-    //             'message' => "Обновлен пользователь " . $user->getUserId()
-    //         ]
-    //     );
-    // }
 
     public function actionDelete(): string
     {

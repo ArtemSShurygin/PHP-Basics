@@ -3,7 +3,8 @@
 
     <ul id="navigation">
         {% for user in users %}
-            <li>{{ user.userName }} {{ user.userLastName }}. День рождения: {{ user.userBirthday | date('d.m.Y') }}. <a href="/user/update/?user_id={{user.userId}}">Изменить</a>  /
+            <li>{{ user.userName }} {{ user.userLastName }}. День рождения: {{ user.userBirthday | date('d-m-Y') }}.
+            <a href="/user/updateform/?user_id={{user.userId}}&user_name={{user.userName}}&user_last_name={{user.userLastName}}&user_birthday={{user.userBirthday}}">Изменить</a>  /
             <a href="/user/delete/?user_id={{user.userId}}">Удалить</a></li>
         {% endfor %}
     </ul>
