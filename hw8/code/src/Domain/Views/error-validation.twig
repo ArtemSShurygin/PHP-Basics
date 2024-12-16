@@ -1,0 +1,10 @@
+
+<div class = "error-validation">
+  <h3>Ошибка ввода данных</h3>
+  {% for error in errors %}
+    <p class = "error">{{error}}</p>
+  {% endfor %}
+  <div>
+    <input type="button" onclick="history.back();" value="Назад"/>
+  </div>
+</div>

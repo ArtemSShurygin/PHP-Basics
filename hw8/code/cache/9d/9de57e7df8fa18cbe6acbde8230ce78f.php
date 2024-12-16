@@ -34,10 +34,10 @@ class __TwigTemplate_5072fa76cb6d1c2bbbbd25a06a288e50 extends Template
     {
         $macros = $this->macros;
         // line 1
-        if (( !($context["auth"] ?? null) - ($context["success"] ?? null))) {
+        if ( !($context["auth_success"] ?? null)) {
             // line 2
             echo "  ";
-            echo twig_escape_filter($this->env, (($context["auth"] ?? null) - ($context["error"] ?? null)), "html", null, true);
+            echo twig_escape_filter($this->env, ($context["auth_error"] ?? null), "html", null, true);
             echo "
 ";
         }

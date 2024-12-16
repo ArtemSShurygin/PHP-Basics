@@ -81,8 +81,8 @@ class UserController extends AbstractController
     }
 
     public function actionSave(): string
-    {
-        if (empty(User::validateRequestDataErrors())) {
+    {   $erors=User::validateRequestDataErrors();
+        if (empty($erors)) {
             $user = new User();
             $user->setParamsFromRequestData();
             $user->saveToStorage();
@@ -97,14 +97,22 @@ class UserController extends AbstractController
                 ]
             );
         } else {
-            throw new \Exception("Переданные данные некорректны");
+            $render = new Render();
+            return $render->renderPage(
+                'error-validation.twig',
+                [
+                    "errors" => $erors
+                ]
+            );
+            //throw new \Exception("Переданные данные некорректны");
         }
     }
 
     public function actionUpdate(): string
     {
         if (User::exists($_POST['user_id'])) {
-            if (empty(User::validateRequestDataErrors())) {
+            $erors = User::validateRequestDataErrors();
+            if (empty($erors)) {
                 $user = new User();
                 $user->setUserId($_POST['user_id']);
 
@@ -122,7 +130,14 @@ class UserController extends AbstractController
                     $arrayData['user_birthday_timestamp'] = strtotime($_POST['birthday']);
                 }
             } else {
-                throw new \Exception("Переданные данные некорректны");
+                $render = new Render();
+                return $render->renderPage(
+                    'error-validation.twig',
+                    [
+                        "errors" => $erors
+                    ]
+                );
+                //throw new \Exception("Переданные данные некорректны");
             }
 
             $user->updateUser($arrayData,  $user->getUserId());
@@ -188,8 +203,8 @@ class UserController extends AbstractController
                 'user-auth.twig',
                 [
                     'title' => 'Форма логина',
-                    'auth-success' => false,
-                    'auth-error' => 'Неверные логин или пароль'
+                    'auth_success' => false,
+                    'auth_error' => 'Неверные логин или пароль'
                 ]
             );
         } else {

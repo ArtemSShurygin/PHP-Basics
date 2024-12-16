@@ -90,7 +90,7 @@ class User
         return $users;
     }
 
-    public static function validateRequestDataErrors():array
+    public static function validateRequestDataErrors(): array
     {
         $erorrs = [];
 
@@ -99,61 +99,52 @@ class User
             isset($_POST['name']) && !empty($_POST['name'])
         )) {
             $erorrs[] = 'Не заполнено поле "Имя"';
+        } else {
+            if (strlen($_POST['name']) > 45) {
+                $erorrs[] = "Имя не должно превышать 45 символов";
+            }
+            if (preg_match('/<([^>]+)>/', $_POST['name'])) {
+                $erorrs[] = "Имя не должно содержать спецсимволы";
+            }
+            if (preg_match('/[0-9]/', $_POST['name'])) {
+                $erorrs[] = "Имя не должно содержать цифры";
+            }
         }
 
         if (!(
             isset($_POST['lastname']) && !empty($_POST['lastname'])
         )) {
             $erorrs[] = 'Не заполнено поле "Фамилия"';
+        } else {
+            if (strlen($_POST['lastname']) > 45) {
+                $erorrs[] = "Фамилия не должна превышать 45 символов";
+            }
+            if (preg_match('/<([^>]+)>/', $_POST['lastname'])) {
+                $erorrs[] = "Фамилия не должна содержать спецсимволы";
+            }
+
+            if (preg_match('/[0-9]/', $_POST['lastname'])) {
+                $erorrs[] = "Фамилия не должна содержать цифры";
+            }
         }
+
 
         if (!(
             isset($_POST['birthday']) && !empty($_POST['birthday'])
         )) {
             $erorrs[] = 'Не заполнено поле "День рождения"';
+        } else {
+            if (!preg_match('/^(\d{2}-\d{2}-\d{4})$/', $_POST['birthday'])) {
+                $erorrs[] = "День рождения должен быть заполнен в формате ДД-ММ-ГГГГ";
+            } else {
+                if (strtotime($_POST['birthday']) < -2145916800) {
+                    $erorrs[] = "День рождения не должен быть раньше 01-01-1902";
+                }
+                if ((strtotime(date("d-m-Y")) + 86401) < strtotime($_POST['birthday'])) {
+                    $erorrs[] = "День рождения не должен быть позже, чем сегодняшняя дата +1 день";
+                }
+            }
         }
-
-
-
-        if (strlen($_POST['name']) > 45) {
-            $erorrs[] = "Имя не должно превышать 45 символов";
-        }
-
-        if (preg_match('/<([^>]+)>/', $_POST['name'])) {
-            $erorrs[] = "Имя не должно содержать спецсимволы";
-        }
-
-        if (preg_match('/[0-9]/', $_POST['name'])) {
-            $erorrs[] = "Имя не должно содержать цифры";
-        }
-
-
-        if (strlen($_POST['lastname']) > 45) {
-            $erorrs[] = "Фамилия не должна превышать 45 символов";
-        }
-        if (preg_match('/<([^>]+)>/', $_POST['lastname'])) {
-            $erorrs[] = "Фамилия не должна содержать спецсимволы";
-        }
-
-        if (preg_match('/[0-9]/', $_POST['lastname'])) {
-            $erorrs[] = "Фамилия не должна содержать цифры";
-        }
-
-
-
-        if (!preg_match('/^(\d{2}-\d{2}-\d{4})$/', $_POST['birthday'])) {
-            $erorrs[] = "День рождения должен быть заполнен в формате ДД-ММ-ГГГГ";
-        }
-
-        if (strtotime($_POST['birthday']) < -2145916800) {
-            $erorrs[] = "День рождения не должен быть раньше 01-01-1902";
-        }
-
-        if ((strtotime(date("d-m-Y")) + 86401) < strtotime($_POST['birthday'])) {
-            $erorrs[] = "День рождения не должен быть позже, чем сегодняшняя дата +1 день";
-        }
-
-
 
         if (!isset($_SESSION['csrf_token']) || $_SESSION['csrf_token'] != $_POST['csrf_token']) {
             $erorrs[] = "Не совпадает csrf_token";
