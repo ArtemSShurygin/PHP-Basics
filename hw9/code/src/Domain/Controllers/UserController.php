@@ -161,19 +161,30 @@ class UserController extends AbstractController
 
     public function actionDelete(): string
     {
-        if (User::exists($_GET['user_id'])) {
-            User::deleteFromStorage($_GET['user_id']);
-
-            $render = new Render();
-
-            return $render->renderPage(
-                'user-removed.twig',
-                []
-            );
+        if (User::exists($_POST['user_id'])) {
+            User::deleteFromStorage($_POST['user_id']);
+            return $this->actionIndex();
         } else {
             throw new \Exception("Пользователь не существует");
         }
     }
+
+
+    // public function actionDelete(): string
+    // {
+    //     if (User::exists($_GET['user_id'])) {
+    //         User::deleteFromStorage($_GET['user_id']);
+
+    //         $render = new Render();
+
+    //         return $render->renderPage(
+    //             'user-removed.twig',
+    //             []
+    //         );
+    //     } else {
+    //         throw new \Exception("Пользователь не существует");
+    //     }
+    // }
 
     public function actionAuth(): string
     {

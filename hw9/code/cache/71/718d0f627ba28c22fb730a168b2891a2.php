@@ -44,7 +44,9 @@ class __TwigTemplate_cfd61cb0b4a86367897caeb62be5e508 extends Template
         $context['_seq'] = twig_ensure_traversable(($context["users"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["user"]) {
             // line 6
-            echo "            <li>";
+            echo "            <li id = user";
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userId", [], "any", false, false, false, 6), "html", null, true);
+            echo " >";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userName", [], "any", false, false, false, 6), "html", null, true);
             echo " ";
             echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userLastName", [], "any", false, false, false, 6), "html", null, true);
@@ -55,7 +57,7 @@ class __TwigTemplate_cfd61cb0b4a86367897caeb62be5e508 extends Template
             // line 7
             if (($context["isAdmin"] ?? null)) {
                 // line 8
-                echo "                    <a href=\"/user/updateform/?user_id=";
+                echo "                    <button type=\"button\"><a href=\"/user/updateform/?user_id=";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userId", [], "any", false, false, false, 8), "html", null, true);
                 echo "&user_name=";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userName", [], "any", false, false, false, 8), "html", null, true);
@@ -63,11 +65,11 @@ class __TwigTemplate_cfd61cb0b4a86367897caeb62be5e508 extends Template
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userLastName", [], "any", false, false, false, 8), "html", null, true);
                 echo "&user_birthday=";
                 echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userBirthday", [], "any", false, false, false, 8), "html", null, true);
-                echo "\">Изменить</a>  /
-                    <a href=\"/user/delete/?user_id=";
+                echo "\">Изменить</a></button>
+                    <button type=\"button\"  onClick=\"deleteUser(";
                 // line 9
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "userId", [], "any", false, false, false, 9), "html", null, true);
-                echo "\">Удалить</a>
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["user"], "getUserId", [], "method", false, false, false, 9), "html", null, true);
+                echo ")\">Удалить</button>
                 ";
             }
             // line 11
@@ -103,7 +105,7 @@ class __TwigTemplate_cfd61cb0b4a86367897caeb62be5e508 extends Template
 
     public function getDebugInfo()
     {
-        return array (  90 => 17,  86 => 15,  84 => 14,  81 => 13,  74 => 11,  69 => 9,  58 => 8,  56 => 7,  47 => 6,  43 => 5,  37 => 1,);
+        return array (  92 => 17,  88 => 15,  86 => 14,  83 => 13,  76 => 11,  71 => 9,  60 => 8,  58 => 7,  47 => 6,  43 => 5,  37 => 1,);
     }
 
     public function getSourceContext()

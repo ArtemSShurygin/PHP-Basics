@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* user-auth.twig */
-class __TwigTemplate_5072fa76cb6d1c2bbbbd25a06a288e50 extends Template
+/* user-form-edit.twig */
+class __TwigTemplate_27fddb492d942d249c1611aee1e83afe extends Template
 {
     private $source;
     private $macros = [];
@@ -34,36 +34,30 @@ class __TwigTemplate_5072fa76cb6d1c2bbbbd25a06a288e50 extends Template
     {
         $macros = $this->macros;
         // line 1
-        if ( !($context["auth_success"] ?? null)) {
-            // line 2
-            echo "  ";
-            echo twig_escape_filter($this->env, ($context["auth_error"] ?? null), "html", null, true);
-            echo "
-";
-        }
-        // line 4
-        echo "
-
-<form action=\"/user/login/\" method=\"post\">
+        echo "<form action=\"/user/save\" method=\"post\">
   <input id=\"csrf_token\" type=\"hidden\" name=\"csrf_token\" value=\"";
-        // line 7
+        // line 2
         echo twig_escape_filter($this->env, ($context["csrf_token"] ?? null), "html", null, true);
         echo "\">
   <p>
-    <label for=\"user-login\">Логин:</label>
-    <input id=\"user-login\" type=\"text\" name=\"login\">
+    <label for=\"user-name\">Имя:</label>
+    <input id=\"user-name\" type=\"text\" name=\"name\">
   </p>
   <p>
-    <label for=\"user-password\">Пароль:</label>
-    <input id=\"user-password\" type=\"password\" name=\"password\">
+    <label for=\"user-lastname\">Фамилия:</label>
+    <input id=\"user-lastname\" type=\"text\" name=\"lastname\">
   </p>
-  <p><input type=\"submit\" value=\"Войти\"></p>
+  <p>
+    <label for=\"user-birthday\">День рождения:</label>
+    <input id=\"user-birthday\" type=\"text\" name=\"birthday\" placeholder=\"ДД-ММ-ГГГГ\">
+  </p>
+  <p><input type=\"submit\" value=\"Сохранить\"></p>
 </form>";
     }
 
     public function getTemplateName()
     {
-        return "user-auth.twig";
+        return "user-form-edit.twig";
     }
 
     public function isTraitable()
@@ -73,11 +67,11 @@ class __TwigTemplate_5072fa76cb6d1c2bbbbd25a06a288e50 extends Template
 
     public function getDebugInfo()
     {
-        return array (  50 => 7,  45 => 4,  39 => 2,  37 => 1,);
+        return array (  40 => 2,  37 => 1,);
     }
 
     public function getSourceContext()
     {
-        return new Source("", "user-auth.twig", "/data/mysite.local/src/Domain/Views/user-auth.twig");
+        return new Source("", "user-form-edit.twig", "/data/mysite.local/src/Domain/Views/user-form-edit.twig");
     }
 }

@@ -3,10 +3,10 @@
 
     <ul id="navigation">
         {% for user in users %}
-            <li>{{ user.userName }} {{ user.userLastName }}. День рождения: {{ user.userBirthday | date('d-m-Y') }}.
+            <li id = user{{user.userId}} >{{ user.userName }} {{ user.userLastName }}. День рождения: {{ user.userBirthday | date('d-m-Y') }}.
                 {% if isAdmin %}
-                    <a href="/user/updateform/?user_id={{user.userId}}&user_name={{user.userName}}&user_last_name={{user.userLastName}}&user_birthday={{user.userBirthday}}">Изменить</a>  /
-                    <a href="/user/delete/?user_id={{user.userId}}">Удалить</a>
+                    <button type="button"><a href="/user/updateform/?user_id={{user.userId}}&user_name={{user.userName}}&user_last_name={{user.userLastName}}&user_birthday={{user.userBirthday}}">Изменить</a></button>
+                    <button type="button"  onClick="deleteUser({{ user.getUserId() }})">Удалить</button>
                 {% endif %}
             </li>
         {% endfor %}

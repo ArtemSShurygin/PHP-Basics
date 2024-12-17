@@ -3,6 +3,10 @@
     <head>
         <title>{{ title }}</title>
         <link rel="stylesheet" href="/styles/style.css">
+        <script
+        src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
     </head>
     <body>
         <div class = "container">
@@ -21,6 +25,16 @@
         </div>
 
         {% include "components/site-footer.twig" %}
-    </body>
 
+        <script>
+            function deleteUser(userId) {
+                $.ajax({
+                    method: 'POST',
+                    url: "/user/delete/",
+                    data: { user_id: userId}
+                });
+                document.querySelector(`#user${userId}`).remove();
+            }
+        </script>
+    </body>
 </html>

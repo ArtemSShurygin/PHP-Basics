@@ -12,8 +12,8 @@ use Twig\Sandbox\SecurityNotAllowedFunctionError;
 use Twig\Source;
 use Twig\Template;
 
-/* components/site-nav.twig */
-class __TwigTemplate_4b8929e2b7817b4820b7cee6baf935b6 extends Template
+/* user-created.twig */
+class __TwigTemplate_5d43fc00a708c108b3600500bfcbdc1f extends Template
 {
     private $source;
     private $macros = [];
@@ -34,16 +34,19 @@ class __TwigTemplate_4b8929e2b7817b4820b7cee6baf935b6 extends Template
     {
         $macros = $this->macros;
         // line 1
-        echo "    <nav class = \"nav\">
-        <a href=\"/\">Главная</a>
-        <a href=\"/user\">Пользователи</a>
-        <a href=\"/about\">О нас</a>
-    </nav>";
+        echo "<h3>";
+        echo twig_escape_filter($this->env, ($context["message"] ?? null), "html", null, true);
+        echo "</h3>";
     }
 
     public function getTemplateName()
     {
-        return "components/site-nav.twig";
+        return "user-created.twig";
+    }
+
+    public function isTraitable()
+    {
+        return false;
     }
 
     public function getDebugInfo()
@@ -53,6 +56,6 @@ class __TwigTemplate_4b8929e2b7817b4820b7cee6baf935b6 extends Template
 
     public function getSourceContext()
     {
-        return new Source("", "components/site-nav.twig", "/data/mysite.local/src/Domain/Views/components/site-nav.twig");
+        return new Source("", "user-created.twig", "/data/mysite.local/src/Domain/Views/user-created.twig");
     }
 }

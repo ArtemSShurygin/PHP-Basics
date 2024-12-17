@@ -42,41 +42,55 @@ class __TwigTemplate_e5428d68791c18ab97ff5c5a8f0d1a77 extends Template
         echo twig_escape_filter($this->env, ($context["title"] ?? null), "html", null, true);
         echo "</title>
         <link rel=\"stylesheet\" href=\"/styles/style.css\">
+        <script
+        src=\"https://code.jquery.com/jquery-3.7.0.min.js\"
+        integrity=\"sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=\"
+        crossorigin=\"anonymous\"></script>
     </head>
     <body>
         <div class = \"container\">
             <div class = \"top\">
                 ";
-        // line 10
-        $this->loadTemplate("components/site-header.twig", "main.twig", 10)->display($context);
-        // line 11
+        // line 14
+        $this->loadTemplate("components/site-header.twig", "main.twig", 14)->display($context);
+        // line 15
         echo "                ";
-        $this->loadTemplate("components/site-nav.twig", "main.twig", 11)->display($context);
-        // line 12
+        $this->loadTemplate("components/site-nav.twig", "main.twig", 15)->display($context);
+        // line 16
         echo "                ";
-        $this->loadTemplate("auth-template.twig", "main.twig", 12)->display($context);
-        // line 13
+        $this->loadTemplate("auth-template.twig", "main.twig", 16)->display($context);
+        // line 17
         echo "            </div>
         </div>
 
         <div class = \"container\">
             <div class = \"main\">
                 ";
-        // line 18
-        $this->loadTemplate(($context["content_template_name"] ?? null), "main.twig", 18)->display($context);
-        // line 19
+        // line 22
+        $this->loadTemplate(($context["content_template_name"] ?? null), "main.twig", 22)->display($context);
+        // line 23
         echo "                ";
-        $this->loadTemplate("components/site-sidebar.twig", "main.twig", 19)->display($context);
-        // line 20
+        $this->loadTemplate("components/site-sidebar.twig", "main.twig", 23)->display($context);
+        // line 24
         echo "            </div>
         </div>
 
         ";
-        // line 23
-        $this->loadTemplate("components/site-footer.twig", "main.twig", 23)->display($context);
-        // line 24
-        echo "    </body>
-
+        // line 27
+        $this->loadTemplate("components/site-footer.twig", "main.twig", 27)->display($context);
+        // line 28
+        echo "
+        <script>
+            function deleteUser(userId) {
+                \$.ajax({
+                    method: 'POST',
+                    url: \"/user/delete/\",
+                    data: { user_id: userId}
+                });
+                document.querySelector(`#user\${userId}`).remove();
+            }
+        </script>
+    </body>
 </html>";
     }
 
@@ -92,7 +106,7 @@ class __TwigTemplate_e5428d68791c18ab97ff5c5a8f0d1a77 extends Template
 
     public function getDebugInfo()
     {
-        return array (  78 => 24,  76 => 23,  71 => 20,  68 => 19,  66 => 18,  59 => 13,  56 => 12,  53 => 11,  51 => 10,  42 => 4,  37 => 1,);
+        return array (  82 => 28,  80 => 27,  75 => 24,  72 => 23,  70 => 22,  63 => 17,  60 => 16,  57 => 15,  55 => 14,  42 => 4,  37 => 1,);
     }
 
     public function getSourceContext()
