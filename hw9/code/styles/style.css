@@ -1,0 +1,64 @@
+* {
+	text-decoration: none;
+}
+
+.container {
+	max-width: 1140px;
+	min-width: 670px;
+	margin: 0 auto;
+}
+
+.top {
+	display: flex;
+	justify-content: space-between;
+	gap: 100px;
+}
+
+.nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+}
+
+.login {
+	display: flex;
+	gap: 20px;
+}
+
+.main {
+	display: flex;
+	justify-content: space-between;
+	gap: 30px;
+}
+
+.content {
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.sidebar {
+	display: flex;
+	flex-direction: column;
+  gap: 10px;
+  min-width: 100px;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+.footer {
+	display: flex;
+	justify-content: center;
+	border: 1px solid black;
+}
+
+
+.error-validation {
+	display: flex;
+	flex-direction: column;
+}
+
+.error-validation p {
+	color: red;
+}
